@@ -1,0 +1,3 @@
+<?php
+// manage-jobs.php
+?>
