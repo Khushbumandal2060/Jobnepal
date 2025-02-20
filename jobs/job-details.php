@@ -1,0 +1,3 @@
+<?php
+// job-details.php
+?>
