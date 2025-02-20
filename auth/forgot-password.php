@@ -1,0 +1,3 @@
+<?php
+// forgot-password.php
+?>
