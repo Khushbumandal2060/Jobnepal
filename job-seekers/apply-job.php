@@ -1,0 +1,3 @@
+<?php
+// apply-job.php
+?>
