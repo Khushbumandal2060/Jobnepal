@@ -1,0 +1,140 @@
+.hiring-section {
+    max-width: 80%;
+    margin: 2rem auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.section-heading {
+    font-size: 32px;
+    color: #1a365d;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.category-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-title {
+    font-size: 20px;
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.hiring-count {
+    font-size: 24px;
+    color: #2b6cb0;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.hiring-text {
+    color: #718096;
+    font-size: 14px;
+}
+
+/* Popular Categories Section */
+.popular-categories-section {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.section-heading {
+    font-size: 32px;
+    color: #1a365d;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.popular-categories-container {
+    display: flex;
+    gap: 20px;
+    animation: move-cards 10s linear infinite;
+}
+
+.category-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    flex-shrink: 0;
+    width: 250px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-title {
+    font-size: 20px;
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.hiring-count {
+    font-size: 24px;
+    color: #2b6cb0;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.hiring-text {
+    color: #718096;
+    font-size: 14px;
+}
+
+.category-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.popular-button {
+    padding: 1rem;
+    margin-top: 2vh;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.popular-button:hover {
+    background-color: rgb(190, 107, 12);
+}
+
+.popular-button a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
