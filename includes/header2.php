@@ -1,7 +1,7 @@
 <header>
     <nav class="nav-container">
         <div class="logo">
-            <a style="text-decoration: none; color:white" href="/">JOBNepal</a>
+            <a style="text-decoration: none; color:white" href="/jobnepal/">JOBNepal</a>
         </div>
         <div class="nav-links" style="display:flex; align-items:center">
             <a href="#jobs">Find Jobs</a>

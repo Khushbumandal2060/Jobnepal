@@ -1,6 +1,6 @@
 <header>
     <nav class="nav-container">
-    <div class="logo"><a  style="text-decoration: none; color:white" href="/">JOBNepal</a></div>
+    <div class="logo"><a  style="text-decoration: none; color:white" href="/jobnepal/">JOBNepal</a></div>
         <div class="nav-links">
             <a href="/jobnepal/jobs/">Find Jobs</a>
             <a href="/jobnepal/companies">Companies</a>
@@ -12,7 +12,7 @@
     <a href="#" class="dropdown-button">Employer Login <span class="dropdown-icon">↓</span></a>
     <div class="dropdown-content">
         <a href="#employer-login">Employer Login</a>
-        <a href="#employee-login">Employee Login</a>
+        <a href="#employee-login">Jobseeker Login</a>
     </div>
 </div>
 
