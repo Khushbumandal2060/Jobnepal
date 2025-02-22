@@ -1,3 +1,0 @@
-<?php
-// reset-password.php
-?>

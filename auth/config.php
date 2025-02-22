@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 $host = 'localhost';
 $db   = 'job_portal';
 $user = 'root';

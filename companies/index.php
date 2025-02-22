@@ -61,7 +61,7 @@
                         $companyTypes = [
                             'Corporate' => 4052,
                             'Foreign MRC' => 1450,
-                            'Nepal MRC' => 512,
+                            'Indian MRC' => 512,
                             'Sterling' => 554
                         ];
                         
@@ -78,10 +78,10 @@
                         <h6>Location</h6>
                         <?php
                         $locations = [
-                            'Kathmandu' => 3174,
-                            'Pokhara' => 3168,
-                            'Butwal' => 2766
-                            
+                            'Bengaluru' => 3174,
+                            'Delhi / NCG' => 3168,
+                            'Mumbai' => 2766,
+                            'Hyderabad' => 2204
                         ];
                         
                         foreach ($locations as $location => $count) {
@@ -122,7 +122,7 @@
                         [
                             'name' => 'Jayem Automotive',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'Kathmandu, Nepal',
+                            'location' => 'New York, USA',
                             'industry' => 'Automotive',
                             'highlights' => ['2.7% revenue growth', '500+ employees'],
                             'revenue' => '2.7% revenue growth'
@@ -130,7 +130,7 @@
                         [
                             'name' => 'Jayem Engineering',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'Pokhara, Nepal',
+                            'location' => 'San Francisco, USA',
                             'industry' => 'Engineering & Construction',
                             'highlights' => ['3.5% revenue growth', '48% market share'],
                             'revenue' => '3.5% revenue growth'
@@ -138,7 +138,7 @@
                         [
                             'name' => 'Buddy Study',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'Butwal, nepal',
+                            'location' => 'London, UK',
                             'industry' => 'Education',
                             'highlights' => ['27 min response time', 'E-learning platform'],
                             'revenue' => '27 min response time'
@@ -146,7 +146,7 @@
                         [
                             'name' => 'Sterling Solutions',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'Kathmandu, nepal',
+                            'location' => 'Berlin, Germany',
                             'industry' => 'IT Services',
                             'highlights' => ['5K+ employees', 'Global network'],
                             'revenue' => '48% market share'
@@ -188,5 +188,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include '../includes/footer.php'; ?>
 </body>
 </html>

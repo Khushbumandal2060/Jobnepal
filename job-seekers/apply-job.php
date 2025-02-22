@@ -1,3 +1,0 @@
-<?php
-// apply-job.php
-?>

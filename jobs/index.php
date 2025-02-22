@@ -57,7 +57,8 @@
                         $jobTypes = [
                             'Full-time' => 2345,
                             'Part-time' => 876,
-                            
+                            'Contract' => 543,
+                            'Remote' => 1567
                         ];
                         
                         foreach ($jobTypes as $type => $count) {
@@ -75,6 +76,7 @@
                         $experienceLevels = [
                             'Entry Level' => 945,
                             'Mid Level' => 1567,
+                            'Senior Level' => 723,
                             'Executive' => 189
                         ];
                         
@@ -197,5 +199,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include '../includes/footer.php'; ?>
 </body>
 </html>
