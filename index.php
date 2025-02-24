@@ -1,4 +1,10 @@
+<?php
+// post_job.php
+session_start();
+?>
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -20,7 +26,6 @@
                 <h1>Find Your Dream Job in Nepal</h1>
                 <p>Discover thousands of job opportunities across Nepal</p>
                 <?php
-                // Ensure the correct file path
                 if (file_exists('includes/search.php')) {
                     include 'includes/search.php';
 

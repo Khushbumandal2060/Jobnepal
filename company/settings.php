@@ -1,11 +1,12 @@
 <?php
+// settings.php
 session_start();
 include '../auth/config.php';
 
-// if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'user') {
-//     header("Location: ../auth/login.php");
-//     exit;
-// }
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'company') {
+    header("Location: ../auth/login.php");
+    exit;
+}
 
 $user_id = $_SESSION['user_id'];
 
@@ -18,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $user = $stmt->fetch();
 
         if (password_verify($_POST['current_password'], $user['password'])) {
-            if ($_POST['new_password'] === $_POST['confirm_password']) { 
+            if ($_POST['new_password'] === $_POST['confirm_password']) { // Check if new passwords match
                 $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
                 $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
                 $stmt->execute([$new_password, $user_id]);
@@ -215,7 +216,7 @@ function isNotificationEnabled($preferenceKey)
                     if (messageBox) {
                         messageBox.style.display = 'none';
                     }
-                    window.location.href = "/jobnepal/company?page=settings";
+                    window.location.href = "/jobnepal/company";
                 }, 2000);
             </script>
             <?php unset($_SESSION['message']); ?>

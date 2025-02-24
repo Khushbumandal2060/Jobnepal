@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Job posted successfully!'];
-        header("Location: dashboard.php");
+        header("Location: /jobnepal/company");
         exit;
     } catch (PDOException $e) {
         error_log("Database error: " . $e->getMessage());

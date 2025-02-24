@@ -1,3 +1,0 @@
-<?php
-// search.php
-?>

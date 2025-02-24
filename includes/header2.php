@@ -9,10 +9,10 @@
             <a style="text-decoration: none; color:white" href="/">JOBNepal</a>
         </div>
         <div class="nav-links" style="display:flex; align-items:center">
-            <a href="/jobnepal/jobs">Find Jobs</a>
+            <a href="/jobnepal/jobs">Jobs</a>
             <a href="/jobnepal/companies">Companies</a>
-            <a href="/jobnepal/info/about.php" class="">About Us</a>
-            <a href="/jobnepal/info/contact.php" class="">Contact Us</a>
+            <a href="/jobnepal/info/about.php" class="">About</a>
+            <a href="/jobnepal/info/contact.php" class="">Contact</a>
 
             <a href="#notifications" class="notification-icon" style="background-color:#11111141; border-radius:10%">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

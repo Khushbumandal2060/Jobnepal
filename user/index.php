@@ -36,16 +36,31 @@ try {
         $job_seeker = ['name' => 'N/A', 'profile_pic' => null]; // Set default values
     }
 
-    // Example data (replace with database queries)
-    $applications = [
-        ['job_title' => 'Senior Developer', 'company' => 'Tech Corp', 'status' => 'Under Review', 'date' => '2024-03-15'],
-        ['job_title' => 'UI Designer', 'company' => 'Design Studio', 'status' => 'Interview Scheduled', 'date' => '2024-03-14']
-    ];
+    // 3. Fetch job applications data from the job_applications table
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM job_applications WHERE job_seeker_id = ?");
+    $stmt->execute([$user_id]);
+    $applications_sent = $stmt->fetchColumn();
 
-    $recommended_jobs = [
-        ['title' => 'Full Stack Developer', 'company' => 'Web Solutions', 'location' => 'Kathmandu'],
-        ['title' => 'Mobile Developer', 'company' => 'App Innovators', 'location' => 'Remote']
-    ];
+
+
+    // 5. Fetch Recent Applications
+    $stmt = $pdo->prepare("
+        SELECT
+            ja.id AS application_id,
+            ja.status,
+            ja.applied_at,
+            j.title AS job_title,
+            c.name AS company_name
+        FROM job_applications ja
+        JOIN jobs j ON ja.job_id = j.id
+        JOIN companies c ON j.company_id = c.id
+        WHERE ja.job_seeker_id = ?
+        ORDER BY ja.applied_at DESC
+        LIMIT 5
+    ");
+    $stmt->execute([$user_id]);
+    $recent_applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
     $profile_strength = 75;
 } catch (PDOException $e) {
@@ -135,12 +150,9 @@ try {
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>Applications Sent</h3>
-                        <p class="stat-number">15</p>
+                        <p class="stat-number"><?= htmlspecialchars($applications_sent) ?></p>
                     </div>
-                    <div class="stat-card">
-                        <h3>Interviews</h3>
-                        <p class="stat-number">3</p>
-                    </div>
+
                     <div class="stat-card">
                         <h3>Profile Strength</h3>
                         <div class="progress-bar">
@@ -150,35 +162,20 @@ try {
                     </div>
                 </div>
 
-                <!-- Recommended Jobs -->
-                <section class="recommended-jobs">
-                    <h2 class="section-title">Recommended Jobs</h2>
-                    <div class="job-list">
-                        <?php foreach ($recommended_jobs as $job): ?>
-                            <div class="job-card">
-                                <div>
-                                    <h3><?= htmlspecialchars($job['title']) ?></h3>
-                                    <p><?= htmlspecialchars($job['company']) ?> • <?= htmlspecialchars($job['location']) ?>
-                                    </p>
-                                </div>
-                                <a href="#" class="btn">Apply Now</a>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </section>
+
 
                 <!-- Recent Applications -->
                 <section class="recent-applications">
                     <h2 class="section-title">Recent Applications</h2>
                     <div class="job-list">
-                        <?php foreach ($applications as $application): ?>
+                        <?php foreach ($recent_applications as $application): ?>
                             <div class="job-card">
                                 <div>
                                     <h3><?= htmlspecialchars($application['job_title']) ?></h3>
-                                    <p><?= htmlspecialchars($application['company']) ?></p>
+                                    <p><?= htmlspecialchars($application['company_name']) ?></p>
                                     <p>Status: <?= htmlspecialchars($application['status']) ?></p>
                                 </div>
-                                <span class="application-date"><?= htmlspecialchars($application['date']) ?></span>
+                                <span class="application-date"><?= htmlspecialchars(date('Y-m-d', strtotime($application['applied_at']))) ?></span>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -210,69 +207,54 @@ try {
 
                 // Load content based on the target
                 if (target === 'home') {
-                    mainContent.innerHTML = `  <div style="display:flex">
-                <h1 class="section-title">Welcome Back, <?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?>!</h1>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Applications Sent</h3>
-                    <p class="stat-number">15</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Interviews</h3>
-                    <p class="stat-number">3</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Profile Strength</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: <?= $profile_strength ?>%"><?= $profile_strength ?>%</div>
+                    mainContent.innerHTML = `
+                  <div style="display:flex">
+                        <h1 class="section-title">Welcome Back, <?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?>!</h1>
                     </div>
-                </div>
-            </div>
 
-            <!-- Recommended Jobs -->
-            <section class="recommended-jobs">
-                <h2 class="section-title">Recommended Jobs</h2>
-                <div class="job-list">
-                    <?php foreach ($recommended_jobs as $job): ?>
-                        <div class="job-card">
-                            <div>
-                                <h3><?= htmlspecialchars($job['title']) ?></h3>
-                                <p><?= htmlspecialchars($job['company']) ?> • <?= htmlspecialchars($job['location']) ?></p>
-                            </div>
-                            <a href="#" class="btn">Apply Now</a>
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Applications Sent</h3>
+                            <p class="stat-number"><?= htmlspecialchars($applications_sent) ?></p>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
 
-            <!-- Recent Applications -->
-            <section class="recent-applications">
-                <h2 class="section-title">Recent Applications</h2>
-                <div class="job-list">
-                    <?php foreach ($applications as $application): ?>
-                        <div class="job-card">
-                            <div>
-                                <h3><?= htmlspecialchars($application['job_title']) ?></h3>
-                                <p><?= htmlspecialchars($application['company']) ?></p>
-                                <p>Status: <?= htmlspecialchars($application['status']) ?></p>
+                        <div class="stat-card">
+                            <h3>Profile Strength</h3>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: <?= $profile_strength ?>%"><?= $profile_strength ?>%
+                                </div>
                             </div>
-                            <span class="application-date"><?= htmlspecialchars($application['date']) ?></span>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>`;
+                    </div>
+
+  
+
+                    <!-- Recent Applications -->
+                    <section class="recent-applications">
+                        <h2 class="section-title">Recent Applications</h2>
+                        <div class="job-list">
+                            <?php foreach ($recent_applications as $application): ?>
+                                <div class="job-card">
+                                    <div>
+                                        <h3><?= htmlspecialchars($application['job_title']) ?></h3>
+                                        <p><?= htmlspecialchars($application['company_name']) ?></p>
+                                        <p>Status: <?= htmlspecialchars($application['status']) ?></p>
+                                    </div>
+                                    <span class="application-date"><?= htmlspecialchars(date('Y-m-d', strtotime($application['applied_at']))) ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </section>
+            `;
                 }
-                else if (target == "logout") {
+                 else if (target == "logout") {
                     fetch('/jobnepal/auth/logout.php')
                         .then(() => {
                             window.location.href = '/jobnepal/auth/login.php'; 
                         })
                         .catch(error => console.error('Logout failed:', error));
                 }
-
                 else {
                     fetch(target + '.php')
                         .then(response => response.text())

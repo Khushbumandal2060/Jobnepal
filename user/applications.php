@@ -1,5 +1,4 @@
 <?php
-// applications.php
 session_start();
 include '../auth/config.php';
 
@@ -45,158 +44,149 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Job Applications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="YOUR_SRI_HASH" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        
-/* Applications Page */
-.applications-container {
-    padding: 2rem;
-}
+        /* General Styles */
+        :root {
+            --primary-color: #12538f; /* A modern green */
+            --secondary-color: #1565a7; /* Darker shade of green for accents */
+            --tertiary-color: #f39c12; /* A warm orange */
+            --text-color: #333;
+            --light-text-color: #777;
+            --background-color: #f9f9f9;
+            --card-background: #fff;
+            --border-radius: 8px;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
 
-.applications-grid {
-    display: grid;
-    gap: 2rem;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
 
-.application-card {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    box-shadow: 0 2px 4px var(--shadow-color);
-    transition: transform 0.3s ease;
-}
+        h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-.application-card:hover {
-    transform: translateY(-5px);
-}
+        /* Applications Page */
+        .applications-container {
+            padding: 2rem;
+        }
 
-.company-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
 
-.company-logo {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-}
+        .application-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.3s ease;
+            border-left: 5px solid var(--primary-color); /* Colorful left border */
+        }
 
-.job-details {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
 
-.job-details span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: #666;
-}
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
 
-.status-badge {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%; /* Make logo circular */
+            border: 2px solid var(--primary-color);
+        }
 
-.status-badge.pending { background: #fff3cd; color: #856404; }
-.status-badge.accepted { background: #d4edda; color: #155724; }
-.status-badge.rejected { background: #f8d7da; color: #721c24; }
+        .job-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--light-text-color);
+        }
 
-.application-date {
-    font-size: 0.8rem;
-    color: #777;
-    margin-left: auto;
-}
+        .job-details span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
 
-.empty-state {
-    text-align: center;
-    padding: 3rem;
-    background: white;
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-.empty-state i {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
+        .status-badge.pending { background: #fff3cd; color: #856404; }
+        .status-badge.accepted { background: #d4edda; color: #155724; }
+        .status-badge.rejected { background: #f8d7da; color: #721c24; }
 
-/* Profile Page */
-.profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-}
+        .application-date {
+            font-size: 0.8rem;
+            color: var(--light-text-color);
+        }
 
-.profile-form {
-    background: white;
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
 
-.profile-pic-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
+        .empty-state i {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
 
-.current-profile-pic {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--primary-color);
-    box-shadow: 0 2px 4px var(--shadow-color);
-}
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
 
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-color);
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.form-group input[disabled] {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-}
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .salary {
+            font-weight: bold; /* Make the salary stand out */
+            color: var(--secondary-color); /* Use a different color for emphasis */
+        }
     </style>
 </head>
 <body>
 
 <div class="applications-container">
-    <h2 class="section-title">My Applications</h2>
-    
+    <h2>My Applications</h2>
+
     <?php if (empty($applications)): ?>
         <div class="empty-state">
             <i class="fas fa-file-alt fa-3x"></i>
@@ -208,41 +198,30 @@ try {
             <?php foreach ($applications as $app): ?>
                 <div class="application-card">
                     <div class="company-info">
-                        <img src="<?= htmlspecialchars($app['company_logo'] ?? '/assets/images/default-company.png') ?>" 
-                             alt="<?= htmlspecialchars($app['company_name']) ?>" class="company-logo">
                         <div>
                             <h3><?= htmlspecialchars($app['job_title']) ?></h3>
                             <p><?= htmlspecialchars($app['company_name']) ?></p>
                         </div>
                     </div>
-                    
+
                     <div class="job-details">
                         <span class="location"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($app['location']) ?></span>
-                        <span class="salary"><i class="fas fa-money-bill-wave"></i> $<?= number_format($app['salary'], 2) ?></span>
+                        <span class="salary"><i class="fas fa-money-bill-wave"></i> <span class="salary">Rs. <?= number_format($app['salary'], 2) ?></span></span>
                         <span class="job-type"><i class="fas fa-briefcase"></i> <?= htmlspecialchars($app['job_type']) ?></span>
-                    </div>
-                    
-                    <div class="application-status <?= strtolower($app['status']) ?>">
-                        <span class="status-badge"><?= htmlspecialchars($app['status']) ?></span>
                         <span class="application-date">Applied: <?= date('M d, Y', strtotime($app['applied_at'])) ?></span>
                     </div>
-                    
-                    <div class="application-actions">
-                        <button class="btn view-details" onclick="viewApplication(<?= $app['application_id'] ?>)">
-                            View Details
-                        </button>
+
+                    <div class="application-status <?= strtolower($app['status']) ?>">
+                        <span class="status-badge <?= strtolower($app['status']) ?>"><?= htmlspecialchars($app['status']) ?></span>
                     </div>
+
+
                 </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
 </div>
 
-<script>
-    function viewApplication(applicationId) {
-        window.location.href = 'application_details.php?id=' + applicationId;
-    }
-</script>
 
 </body>
 </html>

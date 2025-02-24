@@ -52,7 +52,7 @@ try {
         ]);
 
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Profile updated successfully!'];
-        header("Location: dashboard.php?page=profile");
+        header("Location: /jobnepal/user");
         exit;
     }
 } catch (PDOException $e) {
@@ -139,14 +139,6 @@ try {
         <h2 class="section-title">My Profile</h2>
 
         <form action="profile.php" method="POST" enctype="multipart/form-data" class="profile-form">
-            <div class="form-group">
-                <label for="profile_pic">Profile Picture</label>
-                <div class="profile-pic-container">
-                    <img src="<?= htmlspecialchars($profile['profile_pic'] ?? '/assets/images/default-profile.png') ?>"
-                        alt="Profile Picture" class="current-profile-pic">
-                    <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
-                </div>
-            </div>
 
             <div class="form-group">
                 <label for="name">Full Name</label>

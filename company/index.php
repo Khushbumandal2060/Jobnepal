@@ -12,7 +12,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'company') {
 $user_id = $_SESSION['user_id'];
 
 try {
-    // 1. Fetch company data from the companies table using the user ID
     $stmt = $pdo->prepare("SELECT id, name, company_website, company_description, logo FROM companies WHERE user_id = ?");
     $stmt->execute([$user_id]);
     $company = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -25,8 +24,8 @@ try {
     }
 
     // Set company id to session if not already set.
-    if(!isset($_SESSION['company_id'])){
-       $_SESSION['company_id'] = $company['id']; 
+    if (!isset($_SESSION['company_id'])) {
+        $_SESSION['company_id'] = $company['id'];
     }
     $company_id = $_SESSION['company_id'];
 
@@ -53,6 +52,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +61,9 @@ try {
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <style>
         /* General Styles */
         :root {
@@ -104,7 +106,8 @@ try {
             height: 100%;
             z-index: 100;
             transition: transform 0.3s ease-in-out;
-            overflow-y: auto; /* Add scroll for long content */
+            overflow-y: auto;
+            /* Add scroll for long content */
         }
 
         .profile-section {
@@ -176,7 +179,8 @@ try {
             margin-left: 250px;
             transition: all 0.3s ease;
             background-color: var(--background-color);
-            overflow: auto; /* Add scroll for long content */
+            overflow: auto;
+            /* Add scroll for long content */
         }
 
         .section-title {
@@ -279,7 +283,8 @@ try {
                 width: 100%;
                 height: auto;
                 padding: 1rem;
-                overflow-y: visible; /* Remove scroll on smaller screens */
+                overflow-y: visible;
+                /* Remove scroll on smaller screens */
             }
 
             .main-content {
@@ -294,13 +299,17 @@ try {
 
         /* Specific Adjustments for Image and Title */
         .profile-pic {
-            max-width: 100px;  /* Make sure it fits on smaller screens */
+            max-width: 100px;
+            /* Make sure it fits on smaller screens */
             max-height: 100px;
-            width: auto;    /* Maintain aspect ratio */
+            width: auto;
+            /* Maintain aspect ratio */
             height: auto;
         }
+
         #home-content {
-            min-height: 500px; /* Adjust as needed */
+            min-height: 500px;
+            /* Adjust as needed */
         }
 
         /* Styles for the Header 2 */
@@ -319,16 +328,34 @@ try {
             margin: 0;
             font-size: 2rem;
         }
+
+        .delete-job-btn {
+            background-color: #dc3545; /* Red color */
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .delete-job-btn:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
+
 <body>
 
-<?php include '../includes/header.php'; ?>
+    <?php include '../includes/header.php'; ?>
 
     <div class="dashboard-container">
         <aside class="sidebar" id="sidebar">
             <div class="profile-section">
-                <img src="<?= htmlspecialchars($company['logo'] ?? 'https://img.freepik.com/free-vector/technology-logo-template-with-abstract-shapes_23-2148240852.jpg?t=st=1740262020~exp=1740265620~hmac=a45bacb1f9ab02ac81046f50a1e731b38e2fdc870b99455d2bf9ea8906251911&w=740') ?>" alt="Company Logo" class="profile-pic">
+                <img src="<?= htmlspecialchars($company['logo'] ?? 'https://img.freepik.com/free-vector/technology-logo-template-with-abstract-shapes_23-2148240852.jpg?t=st=1740262020~exp=1740265620~hmac=a45bacb1f9ab02ac81046f50a1e731b38e2fdc870b99455d2bf9ea8906251911&w=740') ?>"
+                    alt="Company Logo" class="profile-pic">
                 <h3><?= htmlspecialchars($company['name'] ?? " ") ?></h3>
                 <p><?= htmlspecialchars($company['email'] ?? "position@company.com") ?></p>
             </div>
@@ -353,14 +380,30 @@ try {
                             Company Profile
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="#" class="nav-link" data-target="applications">
-                            <i class="fas fa-building"></i>
-                           Applications
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-file-earmark-excel-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M5.884 6.68 8 9.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 10l2.233 2.68a.5.5 0 0 1-.768.64L8 10.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 10 5.116 7.32a.5.5 0 1 1 .768-.64" />
+                            </svg>
+                            Applications
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="settings">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-gear" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                                <path
+                                    d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+                            </svg>
+                            Settings
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/jobnepal/auth/logout.php" class="nav-link">
+                        <a href="/jobnepal/auth/logout.php" data-target="logout" class="nav-link">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
@@ -387,17 +430,20 @@ try {
                                     <div>
                                         <h3><?= htmlspecialchars($job['title']) ?></h3>
                                         <p><?= htmlspecialchars($job['location']) ?></p>
+                                        <p>Salary: <?= htmlspecialchars($job['salary']) ?></p>
                                     </div>
                                     <div class="application-count">
                                         <i class="fas fa-users"></i>
                                         <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
+                                        
                                     </div>
                                     <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
+                                    <button class="delete-job-btn" data-job-id="<?= $job['id'] ?>" onclick="deleteJob(<?= $job['id'] ?>)">Delete</button>
+
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                    <a href="#" class="btn" data-target="post_job">Post New Job</a>
                 </section>
             </div>
         </main>
@@ -408,7 +454,7 @@ try {
         const mainContent = document.getElementById('main-content');
 
         navLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
+            link.addEventListener('click', function (event) {
                 event.preventDefault();
 
                 const target = this.getAttribute('data-target');
@@ -417,7 +463,7 @@ try {
                 this.classList.add('active');
 
                 if (target === 'home') {
-                     mainContent.innerHTML = `  
+                    mainContent.innerHTML = `
                     <div style="display: flex; align-items: center; justify-content: start;">
                         <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
                     </div>
@@ -434,19 +480,30 @@ try {
                                         <div>
                                             <h3><?= htmlspecialchars($job['title']) ?></h3>
                                             <p><?= htmlspecialchars($job['location']) ?></p>
+                                            <p>Salary: <?= htmlspecialchars($job['salary']) ?></p>
                                         </div>
                                         <div class="application-count">
                                             <i class="fas fa-users"></i>
                                             <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
                                         </div>
                                         <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
+                                        <button class="delete-job-btn" data-job-id="<?= $job['id'] ?>" onclick="deleteJob(<?= $job['id'] ?>)">Delete</button>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
-                        <a href="#" class="btn" data-target="post_job">Post New Job</a>
                     </section>`;
-                } else {
+                }
+
+                else if (target == "logout") {
+                    fetch('/jobnepal/auth/logout.php')
+                        .then(() => {
+                            window.location.href = '/jobnepal/auth/login.php'; 
+                        })
+                        .catch(error => console.error('Logout failed:', error));
+                }
+                
+                else {
                     fetch(target + '.php')
                         .then(response => response.text())
                         .then(data => {
@@ -461,13 +518,13 @@ try {
         });
 
         // Event listener for "Manage Applications" buttons (loads content dynamically)
-        mainContent.addEventListener('click', function(event) {
+        mainContent.addEventListener('click', function (event) {
             if (event.target.classList.contains('manage-applications-btn')) {
                 event.preventDefault();
                 const jobId = event.target.getAttribute('data-job-id');
 
                 // Load the manage_applications.php page with the job ID
-                fetch(`manage_applications.php?job_id=${jobId}`)
+                fetch(`/jobnepal/company/manage_applications.php?job_id=${jobId}`)
                     .then(response => response.text())
                     .then(data => {
                         mainContent.innerHTML = data;
@@ -484,6 +541,39 @@ try {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
         }
+
+
+        function deleteJob(jobId) {
+        if (confirm('Are you sure you want to delete this job posting?')) {
+            fetch('delete_job.php?job_id=' + jobId, {
+                method: 'GET',  // Or 'DELETE' depending on your server-side implementation
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Reload the current content (e.g., recent job postings)
+                    // This assumes you have a function to reload the job list
+                    alert('Job deleted successfully!');
+                    // reloadJobList();  // Call a function to reload the job list
+                    location.reload() // Reload the entire page for simplicity
+                } else {
+                    alert('Failed to delete job.');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting job:', error);
+                alert('An error occurred while deleting the job.');
+            });
+        }
+    }
+    function openIframe(jobId) {
+        document.getElementById("manageIframe").src = "manageapplication.php?job_id=" + jobId;
+        document.getElementById("iframeContainer").style.display = "block";
+    }
+
+    function closeIframe() {
+        document.getElementById("iframeContainer").style.display = "none";
+    }
     </script>
 </body>
+
 </html>
