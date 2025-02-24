@@ -59,163 +59,431 @@ try {
     <title>Company Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/company_dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #673ab7;
+            --secondary-color: #512da8;
+            --background-color: #f5f0ff;
+            --text-color: #333333;
+            --light-gray: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+            --header-bg: #303f9f;
+            --nav-bg: #ede7f6;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Dashboard Container */
+        /* .dashboard-container {
+            display: grid;
+            grid-template-columns: 800px 1fr;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        } */
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: var(--nav-bg);
+            padding: 2rem;
+            box-shadow: 2px 0 10px var(--shadow-color);
+            position: fixed;
+            width: 250px;
+            height: 100%;
+            z-index: 100;
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto; /* Add scroll for long content */
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .profile-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .profile-section p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Nav Menu */
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-link:hover i,
+        .nav-link.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem;
+            margin-left: 250px;
+            transition: all 0.3s ease;
+            background-color: var(--background-color);
+            overflow: auto; /* Add scroll for long content */
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        /* Recent Jobs */
+        .recent-jobs {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        .job-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .job-card {
+            padding: 1.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px var(--shadow-color);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .job-card p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .application-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .application-count i {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+                overflow-y: visible; /* Remove scroll on smaller screens */
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            .job-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Specific Adjustments for Image and Title */
+        .profile-pic {
+            max-width: 100px;  /* Make sure it fits on smaller screens */
+            max-height: 100px;
+            width: auto;    /* Maintain aspect ratio */
+            height: auto;
+        }
+        #home-content {
+            min-height: 500px; /* Adjust as needed */
+        }
+
+        /* Styles for the Header 2 */
+        .header-container {
+            background-color: var(--header-bg);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+            z-index: 1000;
+            position: sticky;
+            top: 0;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+    </style>
 </head>
 <body>
-<?php include '../includes/header2.php'; ?>
-<div class="dashboard-container">
-    <aside class="sidebar" id="sidebar">
-        <div class="profile-section">
-            <img src="<?= htmlspecialchars($company['logo'] ?? 'https://img.freepik.com/free-vector/technology-logo-template-with-abstract-shapes_23-2148240852.jpg?t=st=1740262020~exp=1740265620~hmac=a45bacb1f9ab02ac81046f50a1e731b38e2fdc870b99455d2bf9ea8906251911&w=740') ?>" alt="Company Logo" class="profile-pic">
-            <h3><?= htmlspecialchars($company['name'] ?? " ") ?></h3>
-            <p><?= htmlspecialchars($company['email'] ?? "position@company.com") ?></p>
-        </div>
 
-        <nav>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" data-target="home">
-                        <i class="fas fa-home"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-target="post_job">
-                        <i class="fas fa-plus-circle"></i>
-                        Post a Job
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-target="company_profile">
-                        <i class="fas fa-building"></i>
-                        Company Profile
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/jobnepal/auth/logout.php" class="nav-link">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+<?php include '../includes/header.php'; ?>
 
-    <main class="main-content" id="main-content">
-        <div id="home-content">
-            <div style="display: flex; align-items: center; justify-content: start;">
-                <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
+    <div class="dashboard-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="profile-section">
+                <img src="<?= htmlspecialchars($company['logo'] ?? 'https://img.freepik.com/free-vector/technology-logo-template-with-abstract-shapes_23-2148240852.jpg?t=st=1740262020~exp=1740265620~hmac=a45bacb1f9ab02ac81046f50a1e731b38e2fdc870b99455d2bf9ea8906251911&w=740') ?>" alt="Company Logo" class="profile-pic">
+                <h3><?= htmlspecialchars($company['name'] ?? " ") ?></h3>
+                <p><?= htmlspecialchars($company['email'] ?? "position@company.com") ?></p>
             </div>
 
-            <!-- Recent Job Postings -->
-            <section class="recent-jobs">
-                <h2 class="section-title">Recent Job Postings</h2>
-                <div class="job-list">
-                    <?php if (empty($recent_jobs)): ?>
-                        <p>No recent job postings.</p>
-                    <?php else: ?>
-                        <?php foreach ($recent_jobs as $job): ?>
-                            <div class="job-card">
-                                <div>
-                                    <h3><?= htmlspecialchars($job['title']) ?></h3>
-                                    <p><?= htmlspecialchars($job['location']) ?></p>
-                                </div>
-                                <div class="application-count">
-                                    <i class="fas fa-users"></i>
-                                    <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-target="home">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="post_job">
+                            <i class="fas fa-plus-circle"></i>
+                            Post a Job
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="company_profile">
+                            <i class="fas fa-building"></i>
+                            Company Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="applications">
+                            <i class="fas fa-building"></i>
+                           Applications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/jobnepal/auth/logout.php" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="main-content">
+            <div id="home-content">
+                <div style="display: flex; align-items: center; justify-content: start;">
+                    <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
+                </div>
+
+                <!-- Recent Job Postings -->
+                <section class="recent-jobs">
+                    <h2 class="section-title">Recent Job Postings</h2>
+                    <div class="job-list">
+                        <?php if (empty($recent_jobs)): ?>
+                            <p>No recent job postings.</p>
+                        <?php else: ?>
+                            <?php foreach ($recent_jobs as $job): ?>
+                                <div class="job-card">
+                                    <div>
+                                        <h3><?= htmlspecialchars($job['title']) ?></h3>
+                                        <p><?= htmlspecialchars($job['location']) ?></p>
+                                    </div>
+                                    <div class="application-count">
+                                        <i class="fas fa-users"></i>
+                                        <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
+                                    </div>
                                     <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-                <a href="#" class="btn" data-target="post_job">Post New Job</a>
-            </section>
-        </div>
-    </main>
-</div>
-
-<script>
-    const navLinks = document.querySelectorAll('.nav-link');
-    const mainContent = document.getElementById('main-content');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const target = this.getAttribute('data-target');
-
-            navLinks.forEach(link => link.classList.remove('active'));
-            this.classList.add('active');
-
-            if (target === 'home') {
-                 mainContent.innerHTML = `  <div style="display:flex">
-                <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <a href="#" class="btn" data-target="post_job">Post New Job</a>
+                </section>
             </div>
+        </main>
+    </div>
 
-            <!-- Recent Job Postings -->
-            <section class="recent-jobs">
-                <h2 class="section-title">Recent Job Postings</h2>
-                <div class="job-list">
-                    <?php if (empty($recent_jobs)): ?>
-                        <p>No recent job postings.</p>
-                    <?php else: ?>
-                        <?php foreach ($recent_jobs as $job): ?>
-                            <div class="job-card">
-                                <div>
-                                    <h3><?= htmlspecialchars($job['title']) ?></h3>
-                                    <p><?= htmlspecialchars($job['location']) ?></p>
-                                </div>
-                                <div class="application-count">
-                                    <i class="fas fa-users"></i>
-                                    <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
-                                    <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-                <a href="#" class="btn" data-target="post_job">Post New Job</a>
-            </section>`;
-            }
-            else {
-                fetch(target + '.php')
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mainContent = document.getElementById('main-content');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const target = this.getAttribute('data-target');
+
+                navLinks.forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+
+                if (target === 'home') {
+                     mainContent.innerHTML = `  
+                    <div style="display: flex; align-items: center; justify-content: start;">
+                        <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
+                    </div>
+
+                    <!-- Recent Job Postings -->
+                    <section class="recent-jobs">
+                        <h2 class="section-title">Recent Job Postings</h2>
+                        <div class="job-list">
+                            <?php if (empty($recent_jobs)): ?>
+                                <p>No recent job postings.</p>
+                            <?php else: ?>
+                                <?php foreach ($recent_jobs as $job): ?>
+                                    <div class="job-card">
+                                        <div>
+                                            <h3><?= htmlspecialchars($job['title']) ?></h3>
+                                            <p><?= htmlspecialchars($job['location']) ?></p>
+                                        </div>
+                                        <div class="application-count">
+                                            <i class="fas fa-users"></i>
+                                            <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
+                                        </div>
+                                        <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                        <a href="#" class="btn" data-target="post_job">Post New Job</a>
+                    </section>`;
+                } else {
+                    fetch(target + '.php')
+                        .then(response => response.text())
+                        .then(data => {
+                            mainContent.innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('Error loading content:', error);
+                            mainContent.innerHTML = '<p>Error loading content.</p>';
+                        });
+                }
+            });
+        });
+
+        // Event listener for "Manage Applications" buttons (loads content dynamically)
+        mainContent.addEventListener('click', function(event) {
+            if (event.target.classList.contains('manage-applications-btn')) {
+                event.preventDefault();
+                const jobId = event.target.getAttribute('data-job-id');
+
+                // Load the manage_applications.php page with the job ID
+                fetch(`manage_applications.php?job_id=${jobId}`)
                     .then(response => response.text())
                     .then(data => {
                         mainContent.innerHTML = data;
                     })
                     .catch(error => {
-                        console.error('Error loading content:', error);
-                        mainContent.innerHTML = '<p>Error loading content.</p>';
+                        console.error('Error loading applications:', error);
+                        mainContent.innerHTML = '<p>Error loading applications.</p>';
                     });
             }
         });
-    });
 
-    // Event listener for "Manage Applications" buttons (loads content dynamically)
-    mainContent.addEventListener('click', function(event) {
-        if (event.target.classList.contains('manage-applications-btn')) {
-            event.preventDefault();
-            const jobId = event.target.getAttribute('data-job-id');
-
-            // Load the manage_applications.php page with the job ID
-            fetch(`manage_applications.php?job_id=${jobId}`)
-                .then(response => response.text())
-                .then(data => {
-                    mainContent.innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Error loading applications:', error);
-                    mainContent.innerHTML = '<p>Error loading applications.</p>';
-                });
+        // Add sidebar toggle functionality (if needed)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
         }
-    });
-
-    // Add sidebar toggle functionality (if needed)
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('open');
-    }
-</script>
+    </script>
 </body>
 </html>

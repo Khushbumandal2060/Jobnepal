@@ -59,6 +59,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,141 +73,144 @@ try {
 
     </style>
 </head>
+
 <body>
-<?php include '../includes/header2.php'; ?>
+    <?php include '../includes/header2.php'; ?>
 
-<div class="dashboard-container">
-    <button class="toggle-button" onclick="toggleSidebar()">☰</button>
+    <div class="dashboard-container">
+        <button class="toggle-button" onclick="toggleSidebar()">☰</button>
 
-    <aside class="sidebar" id="sidebar">
-        <div class="profile-section">
-            <img src="<?= htmlspecialchars($job_seeker['profile_pic'] ?? 'https://img.icons8.com/?size=100&id=PBofAcohuuFl&format=png&color=000000') ?>"
-                 alt="Profile Picture" class="profile-pic">
-            <h3><?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?></h3>
-            <p><?= htmlspecialchars($user['email']) ?></p>
-        </div>
-
-        <nav>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" data-target="home">
-                        <i class="fas fa-home"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-target="profile">
-                        <i class="fas fa-user"></i>
-                        My Profile
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-target="applications">
-                        <i class="fas fa-file-alt"></i>
-                        Applications
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-target="settings">
-                        <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/jobnepal/auth/logout.php" class="nav-link">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
-    <main class="main-content" id="main-content">
-        <!-- Initial content (Dashboard Home) -->
-        <div id="home-content">
-            <div style="display:flex">
-                <h1 class="section-title">Welcome Back, <?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?>!</h1>
+        <aside class="sidebar" id="sidebar">
+            <div class="profile-section">
+                <img src="<?= htmlspecialchars($job_seeker['profile_pic'] ?? 'https://img.icons8.com/?size=100&id=PBofAcohuuFl&format=png&color=000000') ?>"
+                    alt="Profile Picture" class="profile-pic">
+                <h3><?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?></h3>
+                <p><?= htmlspecialchars($user['email']) ?></p>
             </div>
 
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Applications Sent</h3>
-                    <p class="stat-number">15</p>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-target="home">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="profile">
+                            <i class="fas fa-user"></i>
+                            My Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="applications">
+                            <i class="fas fa-file-alt"></i>
+                            Applications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="settings">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/jobnepal/auth/logout.php" class="nav-link" data-target="logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="main-content">
+            <!-- Initial content (Dashboard Home) -->
+            <div id="home-content">
+                <div style="display:flex">
+                    <h1 class="section-title">Welcome Back, <?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?>!</h1>
                 </div>
-                <div class="stat-card">
-                    <h3>Interviews</h3>
-                    <p class="stat-number">3</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Profile Strength</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: <?= $profile_strength ?>%"><?= $profile_strength ?>%</div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Applications Sent</h3>
+                        <p class="stat-number">15</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Interviews</h3>
+                        <p class="stat-number">3</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Profile Strength</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: <?= $profile_strength ?>%"><?= $profile_strength ?>%
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Recommended Jobs -->
+                <section class="recommended-jobs">
+                    <h2 class="section-title">Recommended Jobs</h2>
+                    <div class="job-list">
+                        <?php foreach ($recommended_jobs as $job): ?>
+                            <div class="job-card">
+                                <div>
+                                    <h3><?= htmlspecialchars($job['title']) ?></h3>
+                                    <p><?= htmlspecialchars($job['company']) ?> • <?= htmlspecialchars($job['location']) ?>
+                                    </p>
+                                </div>
+                                <a href="#" class="btn">Apply Now</a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </section>
+
+                <!-- Recent Applications -->
+                <section class="recent-applications">
+                    <h2 class="section-title">Recent Applications</h2>
+                    <div class="job-list">
+                        <?php foreach ($applications as $application): ?>
+                            <div class="job-card">
+                                <div>
+                                    <h3><?= htmlspecialchars($application['job_title']) ?></h3>
+                                    <p><?= htmlspecialchars($application['company']) ?></p>
+                                    <p>Status: <?= htmlspecialchars($application['status']) ?></p>
+                                </div>
+                                <span class="application-date"><?= htmlspecialchars($application['date']) ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </section>
             </div>
+        </main>
+    </div>
 
-            <!-- Recommended Jobs -->
-            <section class="recommended-jobs">
-                <h2 class="section-title">Recommended Jobs</h2>
-                <div class="job-list">
-                    <?php foreach ($recommended_jobs as $job): ?>
-                        <div class="job-card">
-                            <div>
-                                <h3><?= htmlspecialchars($job['title']) ?></h3>
-                                <p><?= htmlspecialchars($job['company']) ?> • <?= htmlspecialchars($job['location']) ?></p>
-                            </div>
-                            <a href="#" class="btn">Apply Now</a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
 
-            <!-- Recent Applications -->
-            <section class="recent-applications">
-                <h2 class="section-title">Recent Applications</h2>
-                <div class="job-list">
-                    <?php foreach ($applications as $application): ?>
-                        <div class="job-card">
-                            <div>
-                                <h3><?= htmlspecialchars($application['job_title']) ?></h3>
-                                <p><?= htmlspecialchars($application['company']) ?></p>
-                                <p>Status: <?= htmlspecialchars($application['status']) ?></p>
-                            </div>
-                            <span class="application-date"><?= htmlspecialchars($application['date']) ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
-        </div>
-    </main>
-</div>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mainContent = document.getElementById('main-content');
 
-<script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('open');
-    }
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default link behavior
 
-    const navLinks = document.querySelectorAll('.nav-link');
-    const mainContent = document.getElementById('main-content');
+                const target = this.getAttribute('data-target');
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default link behavior
+                // Remove 'active' class from all links
+                navLinks.forEach(link => link.classList.remove('active'));
 
-            const target = this.getAttribute('data-target');
+                // Add 'active' class to the clicked link
+                this.classList.add('active');
 
-            // Remove 'active' class from all links
-            navLinks.forEach(link => link.classList.remove('active'));
-
-            // Add 'active' class to the clicked link
-            this.classList.add('active');
-
-            // Load content based on the target
-            if (target === 'home') {
-                 mainContent.innerHTML = `  <div style="display:flex">
+                // Load content based on the target
+                if (target === 'home') {
+                    mainContent.innerHTML = `  <div style="display:flex">
                 <h1 class="section-title">Welcome Back, <?= htmlspecialchars($job_seeker['name'] ?? 'N/A') ?>!</h1>
             </div>
 
@@ -260,20 +264,29 @@ try {
                     <?php endforeach; ?>
                 </div>
             </section>`;
-            }
-            else {
-                fetch(target + '.php')
-                    .then(response => response.text())
-                    .then(data => {
-                        mainContent.innerHTML = data;
-                    })
-                    .catch(error => {
-                        console.error('Error loading content:', error);
-                        mainContent.innerHTML = '<p>Error loading content.</p>';
-                    });
-            }
+                }
+                else if (target == "logout") {
+                    fetch('/jobnepal/auth/logout.php')
+                        .then(() => {
+                            window.location.href = '/jobnepal/auth/login.php'; 
+                        })
+                        .catch(error => console.error('Logout failed:', error));
+                }
+
+                else {
+                    fetch(target + '.php')
+                        .then(response => response.text())
+                        .then(data => {
+                            mainContent.innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('Error loading content:', error);
+                            mainContent.innerHTML = '<p>Error loading content.</p>';
+                        });
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>

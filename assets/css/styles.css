@@ -123,11 +123,12 @@ header {
 
 
 
-/* Footer */
 footer {
     background: #1e3c72;
     color: white;
     padding: 3rem 2rem;
+    text-align: center;
+    width: 100%;
 }
 
 .footer-content {

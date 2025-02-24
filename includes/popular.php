@@ -39,5 +39,5 @@
         </div>
 
         <button class="popular-button">
-    <a href="/jobs">Explore Jobs</a> </button>
+    <a href="/jobnepal/jobs">Explore Jobs</a> </button>
 </section>

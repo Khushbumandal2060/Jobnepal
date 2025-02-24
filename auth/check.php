@@ -3,7 +3,6 @@
 
 session_start();
 
-
 function checkAuthentication() {
     // Check if the user is logged in
     if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
