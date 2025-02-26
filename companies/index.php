@@ -65,9 +65,9 @@ include '../auth/config.php';
                         <?php
                         $companyTypes = [
                             'Corporate' => 4052,
-                            'Foreign MRC' => 1450,
-                            'Indian MRC' => 512,
-                            'Sterling' => 554
+                            'Foreign MNC' => 1450,
+                            'NGO/INGO' => 512,
+                            'Local' => 554
                         ];
                         
                         foreach ($companyTypes as $type => $count) {
@@ -83,10 +83,10 @@ include '../auth/config.php';
                         <h6>Location</h6>
                         <?php
                         $locations = [
-                            'Bengaluru' => 3174,
-                            'Delhi / NCG' => 3168,
-                            'Mumbai' => 2766,
-                            'Hyderabad' => 2204
+                            'Kathmandu' => 3174,
+                            'Pokhara' => 3168,
+                            'Lalitpur' => 2766,
+                            'Bhaktapur' => 2204
                         ];
                         
                         foreach ($locations as $location => $count) {
@@ -104,7 +104,7 @@ include '../auth/config.php';
                         $industries = [
                             'IT/Networking' => 3174,
                             'Marketing' => 3168,
-                            'Automotive' => 2766,
+                            'Banking' => 2766,
                             'Engineering' => 2204
                         ];
                         
@@ -127,7 +127,7 @@ include '../auth/config.php';
                         [
                             'name' => 'Jayem Automotive',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'New York, USA',
+                            'location' => 'Kathmandu, Nepal',
                             'industry' => 'Automotive',
                             'highlights' => ['2.7% revenue growth', '500+ employees'],
                             'revenue' => '2.7% revenue growth'
@@ -135,7 +135,7 @@ include '../auth/config.php';
                         [
                             'name' => 'Jayem Engineering',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'San Francisco, USA',
+                            'location' => 'Pokhara, Nepal',
                             'industry' => 'Engineering & Construction',
                             'highlights' => ['3.5% revenue growth', '48% market share'],
                             'revenue' => '3.5% revenue growth'
@@ -143,7 +143,7 @@ include '../auth/config.php';
                         [
                             'name' => 'Buddy Study',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'London, UK',
+                            'location' => 'Lalitpur, Nepal',
                             'industry' => 'Education',
                             'highlights' => ['27 min response time', 'E-learning platform'],
                             'revenue' => '27 min response time'
@@ -151,7 +151,7 @@ include '../auth/config.php';
                         [
                             'name' => 'Sterling Solutions',
                             'image' => 'https://placehold.co/150x150',
-                            'location' => 'Berlin, Germany',
+                            'location' => 'Bhaktapur, Nepal',
                             'industry' => 'IT Services',
                             'highlights' => ['5K+ employees', 'Global network'],
                             'revenue' => '48% market share'

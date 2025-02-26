@@ -39,13 +39,6 @@
             <i class="fas fa-cogs categories-cogs-icon"></i>
             <span class="categories-text">Engineering</span>
         </a>
-        <a href="#" class="categories-link">
-            <i class="fas fa-user-graduate categories-user-graduate-icon"></i>
-            <span class="categories-text">Fresher</span>
-        </a>
-        <a href="#" class="categories-link">
-            <i class="fas fa-chart-line categories-chart-line-icon"></i>
-            <span class="categories-text">Analytics</span>
-        </a>
+        
     </div>
 </section>
