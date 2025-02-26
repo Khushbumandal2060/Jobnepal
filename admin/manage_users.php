@@ -133,7 +133,7 @@ try {
                         <p><strong>Experience:</strong> <?= htmlspecialchars($seeker['experience']) ?></p>
                     <?php endif; ?>
 
-                    <form method="post" action="manage_users.php">
+                    <form method="post" action="delete_user.php">
                         <input type="hidden" name="delete_user" value="<?= htmlspecialchars($seeker['id']) ?>">
                         <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this user?')">
                             Delete User

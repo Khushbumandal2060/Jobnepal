@@ -21,10 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_job'])) {
         $stmt->bindParam(':job_id', $job_id_to_delete, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Delete saved jobs associated with the job
-        $stmt = $pdo->prepare("DELETE FROM saved_jobs WHERE job_id = :job_id");
-        $stmt->bindParam(':job_id', $job_id_to_delete, PDO::PARAM_INT);
-        $stmt->execute();
+        
 
         // Delete the job
         $stmt = $pdo->prepare("DELETE FROM jobs WHERE id = :job_id");
