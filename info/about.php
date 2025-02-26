@@ -99,7 +99,7 @@ session_start();
 
 <section id="main">
     <div class="container">
-        <h1>About <span style="color: #ff6f00;">Job Nepal</span></h1>
+        <h1>About Us <span style="color: #ff6f00;">Job Nepal</span></h1>
 
         <div class="info-card">
             <p>Welcome to <b>Job Nepal</b>, your premier platform for connecting talented individuals with exciting career opportunities across Nepal. Our mission is to simplify the job search process for candidates and streamline recruitment for employers, fostering economic growth and prosperity throughout the nation.</p>
@@ -125,9 +125,9 @@ session_start();
             <ul>
                 <li><i class="fas fa-briefcase"></i><b> Extensive Job Listings:</b> A wide range of job opportunities from various industries and locations across Nepal.</li>
                 <li><i class="fas fa-user"></i><b> User-Friendly Interface:</b> An intuitive and easy-to-navigate platform for both job seekers and employers.</li>
-                <li><i class="fas fa-filter"></i><b> Advanced Search & Filtering:</b> Powerful tools to help you find the perfect job or candidate.</li>
+                <li><i class="fas fa-filter"></i><b> Advanced Search:</b> To help you find the perfect job or candidate.</li>
                 <li><i class="fas fa-bullhorn"></i><b> Employer Branding:</b> Opportunities for companies to showcase their culture and attract top talent.</li>
-                <li><i class="fas fa-book"></i><b> Career Resources:</b> Valuable tips, advice, and resources to help you succeed in your job search or recruitment efforts.</li>
+                <li><i class="fas fa-book"></i><b> Career Resources:</b> Help you succeed in your job search or recruitment efforts.</li>
             </ul>
         </div>
 

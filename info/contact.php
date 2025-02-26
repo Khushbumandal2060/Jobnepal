@@ -153,7 +153,7 @@ session_start();
 </head>
 <body>
 
-<?php include '../includes/'; ?>
+<?php include '../includes/header.php'; ?>
 
 <section id="main">
     <div class="container">

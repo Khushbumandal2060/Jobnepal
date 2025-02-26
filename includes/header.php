@@ -11,8 +11,8 @@
         <div class="nav-links" style="display:flex; align-items:center">
             <a href="/jobnepal/job">Jobs</a>
             <a href="/jobnepal/companies">Companies</a>
-            <a href="/jobnepal/info/about.php" class="">About</a>
-            <a href="/jobnepal/info/contact.php" class="">Contact</a>
+            <a href="/jobnepal/info/about.php" class="">About Us</a>
+            <a href="/jobnepal/info/contact.php" class="">Contact Us</a>
 
             <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="dropdown profile-dropdown">

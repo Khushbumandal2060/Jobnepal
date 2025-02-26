@@ -12,8 +12,8 @@
         </div>
         <div>
             <h3>Contact Us</h3>
-            <p>Email: info@jobnepal.com</p>
-            <p>Phone: +977-1-4XXXXXX</p>
+            <p>Email: support@jobnepal.com</p>
+            <p>Phone: +977 123-456-7890</p>
         </div>
     </div>
 </footer>

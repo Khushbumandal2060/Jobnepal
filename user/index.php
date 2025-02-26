@@ -37,13 +37,14 @@ try {
     }
 
     // 3. Fetch job applications data from the job_applications table
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM job_applications WHERE job_seeker_id = ?");
+    // Use job_seeker's id (from the job_seekers table), not user_id.
+
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM job_applications WHERE job_seeker_id = (SELECT id FROM job_seekers WHERE user_id = ?)");
     $stmt->execute([$user_id]);
     $applications_sent = $stmt->fetchColumn();
-
-
-
+    
     // 5. Fetch Recent Applications
+
     $stmt = $pdo->prepare("
         SELECT
             ja.id AS application_id,
@@ -54,10 +55,12 @@ try {
         FROM job_applications ja
         JOIN jobs j ON ja.job_id = j.id
         JOIN companies c ON j.company_id = c.id
-        WHERE ja.job_seeker_id = ?
+        JOIN job_seekers js ON ja.job_seeker_id = js.id  -- Join job_seekers table
+        WHERE js.user_id = ?  -- Use user_id from job_seekers table
         ORDER BY ja.applied_at DESC
         LIMIT 5
     ");
+
     $stmt->execute([$user_id]);
     $recent_applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -150,7 +153,7 @@ try {
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>Applications Sent</h3>
-                        <p class="stat-number"><?= htmlspecialchars($applications_sent) ?></p>
+                        <p class="stat-number"><?= htmlspecialchars(string: $applications_sent) ?></p>
                     </div>
 
                     <div class="stat-card">
@@ -251,7 +254,7 @@ try {
                  else if (target == "logout") {
                     fetch('/jobnepal/auth/logout.php')
                         .then(() => {
-                            window.location.href = '/jobnepal/'; 
+                            window.location.href = '/jobnepal/auth/login.php'; 
                         })
                         .catch(error => console.error('Logout failed:', error));
                 }
