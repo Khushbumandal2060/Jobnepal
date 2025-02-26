@@ -102,6 +102,7 @@ $jobs = mysqli_query($conn, $query);
                 <th>Job Title</th>
                 <th>Company</th>
                 <th>Location</th>
+                <th>Description</th>
                 <th>Salary</th>
             </tr>
         </thead>
