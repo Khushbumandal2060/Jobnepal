@@ -498,7 +498,7 @@ try {
                 else if (target == "logout") {
                     fetch('/jobnepal/auth/logout.php')
                         .then(() => {
-                            window.location.href = '/jobnepal/auth/login.php'; 
+                            window.location.href = '/jobnepal/'; 
                         })
                         .catch(error => console.error('Logout failed:', error));
                 }

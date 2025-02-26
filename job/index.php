@@ -77,8 +77,8 @@ include '../auth/config.php'; // Ensure database connection is included
         <?php include '../includes/tophiring.php'; ?>
 
         <?php
-        if (file_exists('../includes/search.php')) {
-            include '../includes/search.php';
+        if (file_exists('../search/search.php')) {
+            include '../search/search.php';
 
             if (function_exists('renderSearchForm')) {
                 echo renderSearchForm(['action' => 'search_results.php']);

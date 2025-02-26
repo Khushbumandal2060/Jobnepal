@@ -2,9 +2,32 @@
 // profile.php
 session_start();
 include '../auth/config.php';
+
+// Check if $pdo is correctly initialized in config.php
+if (!$pdo) {
+    die("Failed to connect to the database. Check your database configuration.");
+}
+
+// Function to fetch the number of job openings for a company (using PDO)
+function getJobOpeningCount($pdo, $companyId)
+{
+    $sql = "SELECT COUNT(*) AS job_count FROM jobs WHERE company_id = :company_id"; // Corrected parameter name
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':company_id', $companyId, PDO::PARAM_INT); // Corrected parameter name
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $row['job_count'] : 0;
+    } catch (PDOException $e) {
+        error_log("Error fetching job count: " . $e->getMessage());
+        return 0;
+    }
+}
+
 ?>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,32 +35,42 @@ include '../auth/config.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/styles.css" rel="stylesheet">
     <link href="../assets/css/top.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+
+        }
+
         .company-card {
             transition: transform 0.2s;
             height: 100%;
         }
+
         .company-card:hover {
             transform: translateY(-5px);
         }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            /* object-fit: cover;*/
+        }
+
         .company-img {
             width: 150px;
             height: 150px;
             object-fit: cover;
         }
-        .revenue-badge {
-            background: #e9ecef;
-            padding: 0.35em 0.65em;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        .filter-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            position: sticky;
-            top: 20px;
-        }
+
         @media (max-width: 768px) {
             .company-img {
                 width: 100%;
@@ -46,6 +79,7 @@ include '../auth/config.php';
         }
     </style>
 </head>
+
 <body>
     <?php include '../includes/header2.php'; ?>
 
@@ -55,137 +89,56 @@ include '../auth/config.php';
 
     <main class="container my-5">
         <div class="row g-4">
-            <!-- Filters Column -->
-            <div class="col-lg-3">
-                <div class="filter-section">
-                    <h5 class="mb-4">All Filters</h5>
-                    
-                    <div class="filter-group mb-4">
-                        <h6>Company Type</h6>
-                        <?php
-                        $companyTypes = [
-                            'Corporate' => 4052,
-                            'Foreign MRC' => 1450,
-                            'Indian MRC' => 512,
-                            'Sterling' => 554
-                        ];
-                        
-                        foreach ($companyTypes as $type => $count) {
-                            echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' id='type-$type'>
-                                    <label class='form-check-label small' for='type-$type'>$type ($count)</label>
-                                  </div>";
-                        }
-                        ?>
-                    </div>
-
-                    <div class="filter-group mb-4">
-                        <h6>Location</h6>
-                        <?php
-                        $locations = [
-                            'Bengaluru' => 3174,
-                            'Delhi / NCG' => 3168,
-                            'Mumbai' => 2766,
-                            'Hyderabad' => 2204
-                        ];
-                        
-                        foreach ($locations as $location => $count) {
-                            echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' id='loc-$location'>
-                                    <label class='form-check-label small' for='loc-$location'>$location ($count)</label>
-                                  </div>";
-                        }
-                        ?>
-                    </div>
-
-                    <div class="filter-group mb-4">
-                        <h6>Industry</h6>
-                        <?php
-                        $industries = [
-                            'IT/Networking' => 3174,
-                            'Marketing' => 3168,
-                            'Automotive' => 2766,
-                            'Engineering' => 2204
-                        ];
-                        
-                        foreach ($industries as $industry => $count) {
-                            echo "<div class='form-check'>
-                                    <input class='form-check-input' type='checkbox' id='ind-$industry'>
-                                    <label class='form-check-label small' for='ind-$industry'>$industry ($count)</label>
-                                  </div>";
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-
             <!-- Company Listings -->
-            <div class="col-lg-9">
-                <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col-lg-12">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
                     <?php
-                    $companies = [
-                        [
-                            'name' => 'Jayem Automotive',
-                            'image' => 'https://placehold.co/150x150',
-                            'location' => 'New York, USA',
-                            'industry' => 'Automotive',
-                            'highlights' => ['2.7% revenue growth', '500+ employees'],
-                            'revenue' => '2.7% revenue growth'
-                        ],
-                        [
-                            'name' => 'Jayem Engineering',
-                            'image' => 'https://placehold.co/150x150',
-                            'location' => 'San Francisco, USA',
-                            'industry' => 'Engineering & Construction',
-                            'highlights' => ['3.5% revenue growth', '48% market share'],
-                            'revenue' => '3.5% revenue growth'
-                        ],
-                        [
-                            'name' => 'Buddy Study',
-                            'image' => 'https://placehold.co/150x150',
-                            'location' => 'London, UK',
-                            'industry' => 'Education',
-                            'highlights' => ['27 min response time', 'E-learning platform'],
-                            'revenue' => '27 min response time'
-                        ],
-                        [
-                            'name' => 'Sterling Solutions',
-                            'image' => 'https://placehold.co/150x150',
-                            'location' => 'Berlin, Germany',
-                            'industry' => 'IT Services',
-                            'highlights' => ['5K+ employees', 'Global network'],
-                            'revenue' => '48% market share'
-                        ]
-                    ];
+                    // Fetch companies from the database (using PDO)
+                    $sql = "SELECT id, name, company_website, company_description FROM companies";
+                    try {
+                        $stmt = $pdo->query($sql);
+                        $companies = $stmt->fetchAll();
 
-                    foreach ($companies as $company) {
-                        echo '
-                        <div class="col">
-                            <div class="card company-card h-100 shadow-sm">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="'.$company['image'].'" class="img-fluid rounded-start company-img" alt="'.$company['name'].'">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title mb-3">'.$company['name'].'</h5>
-                                            <div class="d-flex gap-2 mb-3">
-                                                <span class="revenue-badge">'.$company['revenue'].'</span>
+                        if ($companies) {
+                            foreach ($companies as $row) {
+                                $companyId = $row["id"];
+                                $companyName = $row["name"];
+                                $companyWebsite = $row["company_website"];
+                                $companyDescription = $row["company_description"];
+                                $jobOpenings = getJobOpeningCount($pdo, $companyId);
+
+                                echo '
+                                <div class="col">
+                                    <div class="card company-card h-100 shadow-sm">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                                <i class="bi bi-building company-logo" style="font-size: 3rem;"></i>
                                             </div>
-                                            <p class="card-text small mb-1">
-                                                <strong>Location:</strong> '.$company['location'].'<br>
-                                                <strong>Industry:</strong> '.$company['industry'].'
-                                            </p>
-                                            <ul class="list-unstyled small text-muted mb-3">
-                                                '.implode('', array_map(function($h) { return "<li>$h</li>"; }, $company['highlights'])).'
-                                            </ul>
-                                            <a href="#" class="btn btn-primary btn-sm">View Jobs</a>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-3">' . htmlspecialchars($companyName) . '</h5>
+                                                    <p class="card-text small mb-2">' . htmlspecialchars($companyDescription) . '</p>
+                                                    <p class="card-text small mb-2">
+                                                        <a href="' . htmlspecialchars($companyWebsite) . '" target="_blank">Visit Website</a>
+                                                    </p>
+                                                    <p class="card-text small mb-3">
+                                                        <strong>Job Openings:</strong> ' . $jobOpenings . '
+                                                    </p>
+                                                    <a href="/jobnepal/job" class="btn btn-primary btn-sm">View Jobs</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>';
+                                </div>';
+                            }
+                        } else {
+                            echo "<p>No companies found.</p>";
+                        }
+                    } catch (PDOException $e) {
+                        error_log("Error fetching companies: " . $e->getMessage());
+                        echo "<p>Error fetching companies. Please try again later.</p>";
                     }
+
                     ?>
                 </div>
             </div>
@@ -195,4 +148,5 @@ include '../auth/config.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <?php include '../includes/footer.php'; ?>
 </body>
+
 </html>

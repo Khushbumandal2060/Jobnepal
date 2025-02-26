@@ -9,7 +9,7 @@
 function renderSearchForm(array $attributes = []): string
 {
     // Set default action if not provided
-    $attributes['action'] = $attributes['action'] ?? '';
+    $attributes['action'] = $attributes['action'] ?? '/jobnepal/search/search_result.php'; // Set action to search_result.php
 
     // Sanitize attributes
     $safeAttributes = array_map('htmlspecialchars', $attributes);
@@ -22,10 +22,11 @@ function renderSearchForm(array $attributes = []): string
 
     $html = <<<HTML
                <div class="search-container" style="background: transparent">
-                <form class="search-form">
+                <form class="search-form" action="/jobnepal/search/search_result.php" method="GET"> <!-- Set method to GET -->
                 <div style="position: relative; flex-grow: 1; min-width: 250px;">
         <i class="fa fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6b7280; font-size: 1rem;"></i>
         <input type="text" 
+               name="term" 
                placeholder="Job title or keyword" 
                style="width: 100%;
                       padding: 0.875rem 1rem 0.875rem 2.5rem;
@@ -39,7 +40,8 @@ function renderSearchForm(array $attributes = []): string
 
     <div style="position: relative; flex-grow: 1; min-width: 250px;">
         <i class="fa fa-map-marker" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #6b7280; font-size: 1rem;"></i>
-        <input type="text" 
+        <input type="text"
+               name="location"  
                placeholder="Location" 
                style="width: 100%;
                       padding: 0.875rem 1rem 0.875rem 2.5rem;

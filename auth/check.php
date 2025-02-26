@@ -17,7 +17,15 @@ function checkAuthentication() {
             // User is a job seeker, redirect to the job seeker dashboard
             header("Location: /jobnepal/user");
             exit;
-        } else {
+        } elseif ($userType === 'admin') {
+            // User is a job seeker, redirect to the job seeker dashboard
+            header("Location: /jobnepal/admin");
+            exit;
+        } 
+        
+        
+        
+        else {
             session_unset();
             session_destroy();
             header("Location: /jobnepal/auth/login.php?message=Invalid session. Please login again.");

@@ -1,20 +1,20 @@
 CREATE DATABASE job_portal;
 USE job_portal;
 
--- Users table (Stores common user information)
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'job_seeker', 'company') NOT NULL,  -- Still needed to define user type
+    role ENUM('admin', 'job_seeker', 'company') NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Job Seekers Table
+
 CREATE TABLE job_seekers (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNIQUE NOT NULL,  -- Link to Users table
-    name VARCHAR(100) NOT NULL,  -- Job seeker's name
+    user_id INT UNIQUE NOT NULL,  
+    name VARCHAR(100) NOT NULL,  
     profile_pic VARCHAR(255),
     resume TEXT,
     skills TEXT,
@@ -26,8 +26,8 @@ CREATE TABLE job_seekers (
 -- Companies Table
 CREATE TABLE companies (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNIQUE NOT NULL,  -- Link to Users table
-    name VARCHAR(255) NOT NULL,  -- Company name
+    user_id INT UNIQUE NOT NULL,  
+    name VARCHAR(255) NOT NULL, 
     company_website VARCHAR(255),
     company_description TEXT,
     logo VARCHAR(255),
@@ -63,41 +63,10 @@ CREATE TABLE job_applications (
 -- Admin Table (Linked to Users)
 CREATE TABLE admin (
     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(100) NOT NULL,  
     user_id INT UNIQUE NOT NULL,
     permissions TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Saved Jobs (For Job Seekers)
-CREATE TABLE saved_jobs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    job_seeker_id INT NOT NULL,
-    job_id INT NOT NULL,
-    saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (job_seeker_id) REFERENCES job_seekers(id) ON DELETE CASCADE,
-    FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
-);
-
--- Messages (Between Companies and Job Seekers)
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_id INT NOT NULL,  -- User ID
-    receiver_id INT NOT NULL,  -- User ID
-    message TEXT NOT NULL,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
--- Reviews (For Companies)
-CREATE TABLE company_reviews (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    company_id INT NOT NULL,
-    job_seeker_id INT NOT NULL,
-    rating INT CHECK (rating BETWEEN 1 AND 5),
-    review TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
-    FOREIGN KEY (job_seeker_id) REFERENCES job_seekers(id) ON DELETE CASCADE
-);

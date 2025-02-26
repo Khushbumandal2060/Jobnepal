@@ -26,13 +26,13 @@ session_start();
                 <h1>Find Your Dream Job in Nepal</h1>
                 <p>Discover thousands of job opportunities across Nepal</p>
                 <?php
-                if (file_exists('includes/search.php')) {
-                    include 'includes/search.php';
+                if (file_exists('search/search.php')) {
+                    include 'search/search.php';
 
                     if (function_exists('renderSearchForm')) {
                         echo renderSearchForm(['action' => 'search_results.php']); // Correct action file
                     } else {
-                        echo "Error: renderSearchForm() function not found in includes/search.php";
+                        echo "Error: renderSearchForm() function not found in search/search.php";
                     }
                 } else {
                     echo "Error: includes/search.php not found";
