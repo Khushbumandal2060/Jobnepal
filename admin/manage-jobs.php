@@ -50,8 +50,9 @@ if (isset($_POST['add_job'])) {
     $description = $_POST['description'];
     $company_name = $_POST['company_name'];
     $location = $_POST['location'];
+    $salary = $_POST['salary'];
 
-    $query = "INSERT INTO jobs (title, description, company_name, location) VALUES ('$title', '$description', '$company_name', '$location')";
+    $query = "INSERT INTO jobs (title, description, company_name, location) VALUES ('$title', '$description', '$company_name', '$location', '$salary)";
     mysqli_query($conn, $query);
     header("Location: manage_jobs.php");
     exit;
@@ -101,7 +102,7 @@ $jobs = mysqli_query($conn, $query);
                 <th>Job Title</th>
                 <th>Company</th>
                 <th>Location</th>
-                <th>Actions</th>
+                <th>Salary</th>
             </tr>
         </thead>
         <tbody>
