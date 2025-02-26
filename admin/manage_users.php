@@ -1,5 +1,4 @@
 <?php
-// manage_users.php
 session_start();
 include '../auth/config.php';
 
@@ -9,27 +8,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'admin') {
     exit;
 }
 
-// Function to delete a user
-if (isset($_POST['delete_user'])) {
-    $user_id_to_delete = (int)$_POST['delete_user'];
-
-    try {
-        $stmt = $pdo->prepare("DELETE FROM users WHERE id = :user_id AND role = 'job_seeker'");
-        $stmt->bindParam(':user_id', $user_id_to_delete, PDO::PARAM_INT);
-        $stmt->execute();
-        if ($stmt->rowCount() > 0) {
-            $_SESSION['message'] = ['type' => 'success', 'text' => 'User deleted successfully.'];
-        } else {
-            $_SESSION['message'] = ['type' => 'danger', 'text' => 'User not found or not a job seeker.'];
-        }
-
-    } catch (PDOException $e) {
-        $_SESSION['message'] = ['type' => 'danger', 'text' => 'Error deleting user: ' . $e->getMessage()];
-        error_log("Error deleting user: " . $e->getMessage());
-    }
-    header("Location: manage_users.php");
-    exit;
-}
 
 try {
     $sql = "SELECT

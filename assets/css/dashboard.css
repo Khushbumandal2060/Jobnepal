@@ -35,7 +35,6 @@
         padding: 2rem; /* Increased padding */
         box-shadow: 2px 0 10px var(--shadow-color); /* More pronounced shadow */
         position: fixed;
-        min-width: 500px;
         height: 100%;
         z-index: 100; /* Ensure it stays on top of content */
         transition: transform 0.3s ease-in-out; /* Smooth sliding animation */
@@ -47,7 +46,6 @@
     .profile-section {
         text-align: center;
         margin-bottom: 3rem;
-        min-width: 500px;
     }
 
     .profile-pic {
