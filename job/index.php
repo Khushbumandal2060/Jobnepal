@@ -71,7 +71,7 @@ include '../auth/config.php'; // Ensure database connection is included
 </head>
 
 <body>
-    <?php include '../includes/header2.php'; ?>
+    <?php include '../includes/header.php'; ?>
 
     <div class="container-fluid my-4">
         <?php include '../includes/tophiring.php'; ?>

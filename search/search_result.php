@@ -199,7 +199,7 @@ $job_seeker_id = $isLoggedIn ? getJobSeekerId($pdo, $_SESSION['user_id']) : null
 <body>
 
 
-    <?php include '../includes/header2.php'; ?>
+    <?php include '../includes/header.php'; ?>
 
     <div class="container">
         <h1>Search Results for "<?= htmlspecialchars($searchTerm) ?>"</h1>

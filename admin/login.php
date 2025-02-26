@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'admin') {
     <link href="../assets/css/auth.css" rel="stylesheet">
 </head>
 <body>
-<?php include '../includes/header2.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <div class="container">
     <div class="auth-container">

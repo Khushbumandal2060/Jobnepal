@@ -29,7 +29,7 @@ if (!empty($_SESSION['user_id'])) {
     </style>
 </head>
 <body>
-<?php include '../includes/header2.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <div class="container">
     <div class="auth-container">

@@ -185,7 +185,7 @@ try {
 </head>
 
 <body>
-    <?php include '../includes/header2.php'; ?>
+    <?php include '../includes/header.php'; ?>
 
     <div class="dashboard-container">
         <button class="toggle-button" onclick="toggleSidebar()">☰</button>
