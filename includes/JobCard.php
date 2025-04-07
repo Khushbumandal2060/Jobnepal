@@ -52,7 +52,9 @@ function renderJobCard($job, $isLoggedIn, $job_seeker_id)
             <span class="job-location"><i class="fas fa-map-marker-alt"></i> ' . htmlspecialchars($job['job_location']) . '</span>
             <span class="job-type"><i class="fas fa-briefcase"></i> ' . htmlspecialchars($job['job_type']) . '</span>
             <p class="salary-range">RS ' . number_format($job['job_salary'], 2) . '</p>
-            <p class="job-description">' . htmlspecialchars(substr($job['job_description'], 0, 200)) . '...</p>
+            <p class="job-description">' . htmlspecialchars(substr($job['job_description'], 0, 200)) . '</p>
+            <p class="job-skills"><strong>Skills:</strong> ' . htmlspecialchars($job['skills']) . '</p>
+            <p class="job-experience"><strong>Experience:</strong> ' . htmlspecialchars($job['experience']) . '</p>
         </div>
         <div class="job-card-footer">
             <div class="job-actions">';
@@ -71,7 +73,7 @@ function renderJobCard($job, $isLoggedIn, $job_seeker_id)
  * Fetch all job listings.
  */
 try {
-    $stmt = $pdo->query("SELECT jobs.id AS job_id, jobs.title AS job_title, jobs.description AS job_description, jobs.location AS job_location, jobs.salary AS job_salary, jobs.job_type AS job_type, companies.name AS company_name FROM jobs INNER JOIN companies ON jobs.company_id = companies.id ORDER BY jobs.created_at DESC");
+    $stmt = $pdo->query("SELECT jobs.id AS job_id, jobs.title AS job_title, jobs.description AS job_description, jobs.location AS job_location, jobs.salary AS job_salary, jobs.job_type AS job_type, jobs.skills AS skills, jobs.experience AS experience, companies.name AS company_name FROM jobs INNER JOIN companies ON jobs.company_id = companies.id ORDER BY jobs.created_at DESC");
     $jobs = $stmt->fetchAll();
 } catch (PDOException $e) {
     die("Error fetching jobs: " . $e->getMessage());
@@ -90,10 +92,7 @@ if ($jobs) {
     echo '<p class="no-jobs">No jobs found. Please check back later.</p>';
 }
 ?>
-
-
-
-<style>
+<style>/* Job Card Container */
 .job-card {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -101,6 +100,7 @@ if ($jobs) {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
     background-color: #fff;
+    overflow: hidden;
 }
 
 .job-card:hover {
@@ -111,48 +111,26 @@ if ($jobs) {
 .job-card-header {
     padding: 15px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     border-bottom: 1px solid #eee;
-}
-
-.company-logo {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-right: 15px;
-    flex-shrink: 0; /* Prevent logo from shrinking */
-}
-
-.company-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.job-title-company {
-    flex-grow: 1;
+    background-color: #f5f5f5;
 }
 
 .job-title {
-    font-size: 1.25rem;
-    margin-bottom: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
     color: #333;
+    margin-bottom: 5px;
 }
 
 .company-name {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #666;
 }
-
 
 /* Body Styles */
 .job-card-body {
     padding: 15px;
-}
-
-.job-details {
-    line-height: 1.6;
 }
 
 .job-location,
@@ -164,16 +142,18 @@ if ($jobs) {
     margin-bottom: 5px;
 }
 
-.job-location i,
-.job-type i {
-    margin-right: 5px;
-}
-
-.job-description {
+.job-description,
+.job-skills,
+.job-experience {
     font-size: 0.95rem;
     color: #444;
+    margin-bottom: 5px;
 }
 
+.job-skills strong,
+.job-experience strong {
+    color: #333;
+}
 
 /* Footer Styles */
 .job-card-footer {
@@ -183,28 +163,16 @@ if ($jobs) {
     justify-content: flex-end;
     align-items: center;
     background-color: #f9f9f9;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
 }
 
 .job-actions a {
     display: inline-block;
     padding: 8px 16px;
-    margin-left: 10px;
     border-radius: 5px;
     text-decoration: none;
     font-size: 0.9rem;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.save-job {
-    border: 1px solid #007bff;
-    color: #007bff;
-}
-
-.save-job:hover {
-    background-color: #007bff;
-    color: #fff;
+    margin-left: 10px;
 }
 
 .apply-now {
@@ -214,6 +182,12 @@ if ($jobs) {
 
 .apply-now:hover {
     background-color: #218838;
+}
+
+.applied-status {
+    color: green;
+    font-weight: bold;
+    margin-left: 10px;
 }
 
 .no-jobs {
@@ -226,16 +200,7 @@ if ($jobs) {
 /* Responsive Design */
 @media (max-width: 768px) {
     .job-card-header {
-        flex-direction: column;
         align-items: flex-start;
-    }
-
-    .company-logo {
-        margin-bottom: 10px;
-    }
-
-    .job-actions {
-        width: 100%;
     }
 
     .job-actions a {
@@ -245,11 +210,5 @@ if ($jobs) {
         margin-left: 0;
         margin-top: 5px;
     }
-}
-
-.applied-status {
-    color: green;
-    font-weight: bold;
-    margin-left: 10px;
 }
 </style>

@@ -206,24 +206,15 @@ try {
                             Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-target="manage-users">
-                            <i class="fas fa-users"></i>
-                            Manage Users
-                        </a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a href="#" class="nav-link" data-target="manage-companies">
                             <i class="fas fa-building"></i>
                             Manage Companies
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-target="manage-jobs">
-                            <i class="fas fa-briefcase"></i>
-                            Manage Jobs
-                        </a>
-                    </li>
+                    
+                        
                     <li class="nav-item">
                         <a href="#" class="nav-link" data-target="settings">
                             <i class="fas fa-cog"></i>
