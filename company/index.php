@@ -33,6 +33,20 @@ try {
     $stmt = $pdo->prepare("SELECT * FROM jobs WHERE company_id = ? ORDER BY created_at DESC LIMIT 5");
     $stmt->execute([$company['id']]);  // Use $company['id'] here
     $recent_jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Get total job seekers
+$stmt = $pdo->query("SELECT COUNT(*) FROM job_seekers");
+$total_job_seekers = $stmt->fetchColumn();
+
+// Get total jobs posted by the company
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM jobs WHERE company_id = ?");
+$stmt->execute([$company_id]);
+$total_jobs = $stmt->fetchColumn();
+
+// Get total applications received
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM job_applications WHERE job_id IN (SELECT id FROM jobs WHERE company_id = ?)");
+$stmt->execute([$company_id]);
+$total_applications = $stmt->fetchColumn();
+
 
     // 3. Get application counts for each job
     $application_counts = [];
@@ -344,7 +358,51 @@ try {
         .delete-job-btn:hover {
             background-color: #c82333;
         }
+        /* Add styles for the dashboard stats */
+        /* Dashboard Stats Section */
+
+
+/* Dashboard Stats Section */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller min-width */
+    gap: 1rem; /* Reduced gap */
+    margin-bottom: 1.5rem; /* Reduced margin */
+}
+
+.stat-card {
+    background: #fff;
+    padding: 1rem; /* Reduced padding */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card i {
+    font-size: 1.5rem; /* Smaller icon size */
+    color: #673ab7;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card h3 {
+    font-size: 1.25rem; /* Smaller heading size */
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.stat-card p {
+    font-size: 0.9rem; /* Smaller text size */
+    color: #777;
+}
+        
+        
     </style>
+   
 </head>
 
 <body>
@@ -358,7 +416,9 @@ try {
                     alt="Company Logo" class="profile-pic">
                 <h3><?= htmlspecialchars($company['name'] ?? " ") ?></h3>
                 <p><?= htmlspecialchars($company['email'] ?? "position@company.com") ?></p>
-            </div>
+</div>
+
+
 
             <nav>
                 <ul class="nav-menu">
@@ -375,21 +435,18 @@ try {
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#" class="nav-link" data-target="manage_jobs">
+                            <i class="fas fa-briefcase"></i>
+                            Manage Jobs and Application
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
                         <a href="#" class="nav-link" data-target="company_profile">
                             <i class="fas fa-building"></i>
                             Company Profile
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a href="#" class="nav-link" data-target="applications">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-file-earmark-excel-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M5.884 6.68 8 9.219l2.116-2.54a.5.5 0 1 1 .768.641L8.651 10l2.233 2.68a.5.5 0 0 1-.768.64L8 10.781l-2.116 2.54a.5.5 0 0 1-.768-.641L7.349 10 5.116 7.32a.5.5 0 1 1 .768-.64" />
-                            </svg>
-                            Applications
-                        </a>
-                    </li> -->
                     <li class="nav-item">
                         <a href="#" class="nav-link" data-target="settings">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -412,41 +469,57 @@ try {
             </nav>
         </aside>
 
+        
         <main class="main-content" id="main-content">
-            <div id="home-content">
-                <div style="display: flex; align-items: center; justify-content: start;">
-                    <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
-                </div>
+    <div id="home-content">
+        <div style="display: flex; align-items: center; justify-content: start;">
+            <h1 class="section-title">Welcome Back, <?= htmlspecialchars($company['name']) ?>!</h1>
+        </div>
 
-                <!-- Recent Job Postings -->
-                <section class="recent-jobs">
-                    <h2 class="section-title">Recent Job Postings</h2>
-                    <div class="job-list">
-                        <?php if (empty($recent_jobs)): ?>
-                            <p>No recent job postings.</p>
-                        <?php else: ?>
-                            <?php foreach ($recent_jobs as $job): ?>
-                                <div class="job-card">
-                                    <div>
-                                        <h3><?= htmlspecialchars($job['title']) ?></h3>
-                                        <p><?= htmlspecialchars($job['location']) ?></p>
-                                        <p>Salary: <?= htmlspecialchars($job['salary']) ?></p>
-                                    </div>
-                                    <div class="application-count">
-                                        <i class="fas fa-users"></i>
-                                        <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
-                                        
-                                    </div>
-                                    <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
-                                    <button class="delete-job-btn" data-job-id="<?= $job['id'] ?>" onclick="deleteJob(<?= $job['id'] ?>)">Delete</button>
-
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
-                </section>
+        <!-- Dashboard Stats -->
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3><?= $total_job_seekers ?></h3>
+                <p>Total Job Seekers</p>
             </div>
-        </main>
+            <div class="stat-card">
+                <i class="fas fa-briefcase"></i>
+                <h3><?= $total_jobs ?></h3>
+                <p>Total Jobs Posted</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-file-alt"></i>
+                <h3><?= $total_applications ?></h3>
+                <p>Total Applications</p>
+            </div>
+        </div>
+
+        <!-- Recent Job Postings -->
+        <section class="recent-jobs">
+            <h2 class="section-title">Recent Job Postings</h2>
+            <div class="job-list">
+                <?php if (empty($recent_jobs)): ?>
+                    <p>No recent job postings.</p>
+                <?php else: ?>
+                    <?php foreach ($recent_jobs as $job): ?>
+                        <div class="job-card">
+                            <div>
+                                <h3><?= htmlspecialchars($job['title']) ?></h3>
+                                <p><?= htmlspecialchars($job['location']) ?></p>
+                                <p>Salary: <?= htmlspecialchars($job['salary']) ?></p>
+                            </div>
+                            <div class="application-count">
+                                <i class="fas fa-users"></i>
+                                <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </section>
+    </div>
+</main>
     </div>
 
     <script>
@@ -486,8 +559,6 @@ try {
                                             <i class="fas fa-users"></i>
                                             <span><?= $application_counts[$job['id']] ?? 0 ?> Applications</span>
                                         </div>
-                                        <a href="#" class="btn manage-applications-btn" data-job-id="<?= $job['id'] ?>">Manage Applications</a>
-                                        <button class="delete-job-btn" data-job-id="<?= $job['id'] ?>" onclick="deleteJob(<?= $job['id'] ?>)">Delete</button>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -517,62 +588,12 @@ try {
             });
         });
 
-        // Event listener for "Manage Applications" buttons (loads content dynamically)
-        mainContent.addEventListener('click', function (event) {
-            if (event.target.classList.contains('manage-applications-btn')) {
-                event.preventDefault();
-                const jobId = event.target.getAttribute('data-job-id');
-
-                // Load the manage_applications.php page with the job ID
-                fetch(`/jobnepal/company/manage_applications.php?job_id=${jobId}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        mainContent.innerHTML = data;
-                    })
-                    .catch(error => {
-                        console.error('Error loading applications:', error);
-                        mainContent.innerHTML = '<p>Error loading applications.</p>';
-                    });
-            }
-        });
-
         // Add sidebar toggle functionality (if needed)
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
         }
-
-
-        function deleteJob(jobId) {
-        if (confirm('Are you sure you want to delete this job posting?')) {
-            fetch('delete_job.php?job_id=' + jobId, {
-                method: 'GET',  // Or 'DELETE' depending on your server-side implementation
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Reload the current content (e.g., recent job postings)
-                    // This assumes you have a function to reload the job list
-                    alert('Job deleted successfully!');
-                    // reloadJobList();  // Call a function to reload the job list
-                    location.reload() // Reload the entire page for simplicity
-                } else {
-                    alert('Failed to delete job.');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting job:', error);
-                alert('An error occurred while deleting the job.');
-            });
-        }
-    }
-    function openIframe(jobId) {
-        document.getElementById("manageIframe").src = "manageapplication.php?job_id=" + jobId;
-        document.getElementById("iframeContainer").style.display = "block";
-    }
-
-    function closeIframe() {
-        document.getElementById("iframeContainer").style.display = "none";
-    }
+        
     </script>
 </body>
 

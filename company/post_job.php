@@ -13,14 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO jobs (
-                company_id, title, description, location, 
+                company_id, title, description, skills, experience, location, 
                 salary, job_type
-            ) VALUES (?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?,?,?)
         ");
         $stmt->execute([
             $_SESSION['company_id'],
             $_POST['title'],
             $_POST['description'],
+            $_POST['skills'],
+            $_POST['experience'],
             $_POST['location'],
             $_POST['salary'],
             $_POST['job_type']
@@ -173,7 +175,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="description">Job Description</label>
             <textarea id="description" name="description" rows="10" required></textarea>
         </div>
-
+        <div class="form-group">
+            <label for="skills">Skills</label>
+            <textarea id="skills" name="skills" rows="10" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="experience">Experience</label>
+            <textarea id="experience" name="experience" rows="5" required></textarea>
+        </div>
         <button type="submit" class="btn btn-primary">Post Job</button>
     </form>
 </div>

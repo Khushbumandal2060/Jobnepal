@@ -7,12 +7,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $company_id = $_SESSION['company_id'];
     $title = $_POST['title'];
     $description = $_POST['description'];
+    $skills = $_POST['skills'];
+    $experience = $_POST['experience'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO jobs (company_id, title, description, location, salary, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->execute([$company_id, $title, $description, $location, $salary]);
+        $stmt = $pdo->prepare("INSERT INTO jobs (company_id, title, description, skills, experience, location, salary, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt->execute([$company_id, $title, $description, $skills,$experience, $location, $salary]);
 
         // Redirect back to the dashboard with a success message
         header("Location: company_dashboard.php?message=Job posted successfully");
