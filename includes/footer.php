@@ -1,7 +1,7 @@
 <footer>
     <div class="footer-content">
         <div>
-            <h3>About JOBNepal</h3>
+            <h3>About /</h3>
             <p>Leading job portal connecting Nepali talent with opportunities.</p>
         </div>
         <div>
@@ -12,7 +12,7 @@
         </div>
         <div>
             <h3>Contact Us</h3>
-            <p>Email: support@jobnepal.com</p>
+            <p>Email: support@/.com</p>
             <p>Phone: +977 123-456-7890</p>
         </div>
     </div>
