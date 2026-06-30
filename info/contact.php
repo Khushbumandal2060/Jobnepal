@@ -170,7 +170,7 @@ session_start();
             <div class="contact-card">
                 <i class="fas fa-envelope"></i>
                 <h3>Email Us</h3>
-                <p>support@jobnepal.com</p>
+                <p>support@/.com</p>
             </div>
 
             <div class="contact-card">
