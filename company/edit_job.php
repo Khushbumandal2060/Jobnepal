@@ -4,7 +4,7 @@ include '../auth/config.php';
 
 // Check if the user is logged in and is a company
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'company') {
-    header("Location: /jobnepal/auth/login.php");
+    header("Location: ///auth/login.php");
     exit;
 }
 

@@ -216,7 +216,7 @@ function isNotificationEnabled($preferenceKey)
                     if (messageBox) {
                         messageBox.style.display = 'none';
                     }
-                    window.location.href = "/jobnepal/company";
+                    window.location.href = "///company";
                 }, 2000);
             </script>
             <?php unset($_SESSION['message']); ?>

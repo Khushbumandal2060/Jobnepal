@@ -37,12 +37,12 @@ try {
                     $logo_path = $full_upload_path;
                 } else {
                     $_SESSION['message'] = ['type' => 'danger', 'text' => 'Failed to upload logo.'];
-                    header("Location: /jobnepal/company");
+                    header("Location: ///company");
                     exit;
                 }
             } else {
                 $_SESSION['message'] = ['type' => 'danger', 'text' => 'Invalid file type. Only JPG, JPEG, and PNG are allowed.'];
-                header("Location: /jobnepal/company");
+                header("Location: ///company");
                 exit;
             }
         }
@@ -66,7 +66,7 @@ try {
         ]);
 
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Company profile updated successfully!'];
-        header("Location: /jobnepal/company");
+        header("Location: ///company");
         exit;
     }
 } catch (PDOException $e) {

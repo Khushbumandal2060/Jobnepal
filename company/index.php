@@ -460,7 +460,7 @@ $total_applications = $stmt->fetchColumn();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/jobnepal/auth/logout.php" data-target="logout" class="nav-link">
+                        <a href="///auth/logout.php" data-target="logout" class="nav-link">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
@@ -567,9 +567,9 @@ $total_applications = $stmt->fetchColumn();
                 }
 
                 else if (target == "logout") {
-                    fetch('/jobnepal/auth/logout.php')
+                    fetch('///auth/logout.php')
                         .then(() => {
-                            window.location.href = '/jobnepal/'; 
+                            window.location.href = '///'; 
                         })
                         .catch(error => console.error('Logout failed:', error));
                 }
