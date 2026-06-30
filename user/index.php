@@ -133,7 +133,7 @@ try {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/jobnepal/auth/logout.php" class="nav-link" data-target="logout">
+                        <a href="///auth/logout.php" class="nav-link" data-target="logout">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
@@ -252,9 +252,9 @@ try {
             `;
                 }
                  else if (target == "logout") {
-                    fetch('/jobnepal/auth/logout.php')
+                    fetch('///auth/logout.php')
                         .then(() => {
-                            window.location.href = '/jobnepal/auth/login.php'; 
+                            window.location.href = '///auth/login.php'; 
                         })
                         .catch(error => console.error('Logout failed:', error));
                 }
