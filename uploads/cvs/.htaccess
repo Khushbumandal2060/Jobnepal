@@ -1,0 +1,9 @@
+# Prevent direct execution of PHP files in uploads directory
+<FilesMatch "\.ph(p[3457]?|t|tml)$">
+    Deny from all
+</FilesMatch>
+
+# Allow only PDF and DOC files to be served
+<FilesMatch "\.(pdf|doc|docx)$">
+    Allow from all
+</FilesMatch>
