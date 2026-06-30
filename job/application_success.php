@@ -3,7 +3,7 @@ session_start();
 include '../auth/config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /jobnepal/auth/login.php");
+    header("Location: ///auth/login.php");
     exit();
 }
 ?>
@@ -67,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="container">
         <h1><i class="fas fa-check-circle"></i> Application Submitted!</h1>
         <p>Your application has been successfully submitted. We will review your information and contact you if you are a suitable candidate.</p>
-        <a href="/jobnepal/job/index.php">Back to Job Listings</a>
+        <a href="///job/index.php">Back to Job Listings</a>
     </div>
 </body>
 </html>
