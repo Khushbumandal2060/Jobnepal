@@ -11,15 +11,15 @@ function checkAuthentication() {
 
         if ($userType === 'company') {
             // User is a company, redirect to the company dashboard
-            header("Location: /jobnepal/company");
+            header("Location: ///company");
             exit;
         } elseif ($userType === 'job_seeker') {
             // User is a job seeker, redirect to the job seeker dashboard
-            header("Location: /jobnepal/user");
+            header("Location: ///user");
             exit;
         } elseif ($userType === 'admin') {
             // User is a job seeker, redirect to the job seeker dashboard
-            header("Location: /jobnepal/admin");
+            header("Location: ///admin");
             exit;
         } 
         
@@ -28,12 +28,12 @@ function checkAuthentication() {
         else {
             session_unset();
             session_destroy();
-            header("Location: /jobnepal/auth/login.php?message=Invalid session. Please login again.");
+            header("Location: ///auth/login.php?message=Invalid session. Please login again.");
             exit;
         }
     } else {
        
-        header("Location: /jobnepal/auth/login.php");
+        header("Location: ///auth/login.php");
         exit;
     }
 }

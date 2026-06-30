@@ -4,7 +4,7 @@ require_once 'config.php';
 
 // Check if the user is logged in and redirect if they are
 if (isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'job_seeker') {
-    header("Location: /jobnepal/auth/check.php");
+    header("Location: /check.php");
     exit();
 }
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['email']) && isset($_GET
                 'text' => "Login successful! Welcome back, " . htmlspecialchars($jobSeeker['name'])
             ];
 
-            header("Location: /jobnepal/auth/check.php");
+            header("Location: ///auth/check.php");
             exit();
         } else {
             // Authentication failed

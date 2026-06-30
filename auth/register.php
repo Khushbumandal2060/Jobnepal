@@ -4,7 +4,7 @@ require_once 'config.php';
 
 // Redirect logged-in users
 if (!empty($_SESSION['user_id'])) {
-    header("Location: /jobnepal"); // Or redirect to their dashboard
+    header("Location: //"); // Or redirect to their dashboard
     exit;
 }
 

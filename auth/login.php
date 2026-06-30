@@ -5,9 +5,9 @@ require_once 'config.php';
 // Redirect if already logged in
 if (!empty($_SESSION['user_id'])) {
     if ($_SESSION['user_type'] === 'job_seeker') {
-        header("Location: /jobnepal/auth/check.php");
+        header("Location: check.php");
     } elseif ($_SESSION['user_type'] === 'company') {
-        header("Location: /jobnepal/auth/check.php");
+        header("Location: check.php");
     }
     exit;
 }
