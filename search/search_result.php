@@ -93,9 +93,9 @@ function renderJobCard($job, $isLoggedIn, $job_seeker_id)
     echo "  <div class='card-footer bg-transparent border-top d-flex justify-content-end'>";
     echo "    <div class='job-actions'>";
     if ($isLoggedIn) {
-        echo $hasApplied ? "<span class='applied-status'>Applied</span>" : "<a href='/jobnepal/job/apply_job.php?job_id={$job['job_id']}' class='btn btn-primary btn-sm'>Apply Now</a>";
+        echo $hasApplied ? "<span class='applied-status'>Applied</span>" : "<a href='///job/apply_job.php?job_id={$job['job_id']}' class='btn btn-primary btn-sm'>Apply Now</a>";
     } else {
-        echo "<a href='/jobnepal/auth/login.php' class='btn btn-outline-primary btn-sm'>Login to Apply</a>";
+        echo "<a href='///auth/login.php' class='btn btn-outline-primary btn-sm'>Login to Apply</a>";
     }
     echo "    </div>";
     echo "  </div>";
