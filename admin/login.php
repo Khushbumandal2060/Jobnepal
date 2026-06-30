@@ -4,7 +4,7 @@ session_start();
 require_once '../auth/config.php';
 
 if (isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'admin') {
-    header("Location: /jobnepal/admin");
+    header("Location: ///admin");
     exit;
 }
 ?>

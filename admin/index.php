@@ -5,7 +5,7 @@ include '../auth/config.php';
 
 // Check if user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'admin') {
-    header("Location: /jobnepal/admin/login.php");
+    header("Location: ///admin/login.php");
     exit;
 }
 
@@ -222,7 +222,7 @@ try {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/jobnepal/auth/logout.php" class="nav-link" data-target="logout">
+                        <a href="///auth/logout.php" class="nav-link" data-target="logout">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
@@ -456,9 +456,9 @@ try {
                             mainContent.innerHTML = '<p>Error loading content.</p>';
                         });
                 } else if (target == "logout") {
-                    fetch('/jobnepal/auth/logout.php')
+                    fetch('///auth/logout.php')
                         .then(() => {
-                            window.location.href = '/jobnepal/';
+                            window.location.href = '///';
                         })
                         .catch(error => console.error('Logout failed:', error));
                 } else {

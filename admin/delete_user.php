@@ -45,5 +45,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user'])) {
     }
 }
 
-header("Location: /jobnepal/admin");
+header("Location: ///admin");
 exit;

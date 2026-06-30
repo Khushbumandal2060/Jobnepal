@@ -4,7 +4,7 @@ require_once '../auth/config.php';
 
 // Check if the user is logged in and redirect if they are
 if (isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'admin') {
-    header("Location: /jobnepal/admin");
+    header("Location: ///admin");
     exit();
 }
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {  // Changed from GET to POST
                 'text' => "Login successful! Welcome back, " . htmlspecialchars($user['admin_name'])
             ];
 
-            header("Location: /jobnepal/admin"); // Admin Dashboard
+            header("Location: ///admin"); // Admin Dashboard
             exit();
         } else {
             // Authentication failed

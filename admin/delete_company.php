@@ -4,7 +4,7 @@ include '../auth/config.php';
 
 // Check if user is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'admin') {
-    header("Location: /jobnepal/auth/login.php");
+    header("Location: ///auth/login.php");
     exit;
 }
 
@@ -61,6 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_company'])) {
         $_SESSION['message'] = ['type' => 'danger', 'text' => 'Error deleting company: ' . $e->getMessage()];
         error_log("Error deleting company: " . $e->getMessage());
     }
-    header("Location: /jobnepal/admin");
+    header("Location: ///admin");
     exit;
 }
