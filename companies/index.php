@@ -124,7 +124,7 @@ function getJobOpeningCount($pdo, $companyId)
                                                     <p class="card-text small mb-3">
                                                         <strong>Job Openings:</strong> ' . $jobOpenings . '
                                                     </p>
-                                                    <a href="/jobnepal/job" class="btn btn-primary btn-sm">View Jobs</a>
+                                                    <a href="///job" class="btn btn-primary btn-sm">View Jobs</a>
                                                 </div>
                                             </div>
                                         </div>
