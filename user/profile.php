@@ -52,7 +52,7 @@ try {
         ]);
 
         $_SESSION['message'] = ['type' => 'success', 'text' => 'Profile updated successfully!'];
-        header("Location: /jobnepal/user");
+        header("Location: ///user");
         exit;
     }
 } catch (PDOException $e) {
